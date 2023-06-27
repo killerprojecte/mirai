@@ -45,7 +45,7 @@ fun Project.configureRemoteRepos() {
                 url = stageRepoLoc.also { it.mkdirs() }.toURI()
             }
 
-            if (System.getenv("MIRAI_IS_SNAPSHOTS_PUBLISHING")?.toBoolean() == true) {
+            if (true) {
                 maven {
                     name = "MiraiRepo"
                     setUrl(System.getenv("SNAPSHOTS_PUBLISHING_URL"))

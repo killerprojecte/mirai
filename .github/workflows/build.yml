@@ -58,7 +58,7 @@ jobs:
 
       - run: >
           ./gradlew updateSnapshotVersion ${{ env.gradleArgs }}
-        if: github.event.pusher && vars.RUN_MIRAI_SNAPSHOTS == 'true'
+        if: github.event.pusher && vars.RUN_MIRAI_SNAPSHOTS == 'true' && false
         env:
           MIRAI_IS_SNAPSHOTS_PUBLISHING: true
           SNAPSHOTS_PUBLISHING_USER: ${{ secrets.SNAPSHOTS_PUBLISHING_USER }}
@@ -69,6 +69,8 @@ jobs:
 
       - name: "Assemble"
         run: ./gradlew assemble ${{ env.gradleArgs }}
+        env:
+          MIRAI_IS_SNAPSHOTS_PUBLISHING: false
 
       - name: Publish Local Artifacts
         if: ${{ env.enableLocalPublishingTest == 'true' }}
@@ -90,7 +92,7 @@ jobs:
         if: ${{ github.event.pusher && env.isMac == 'true' && vars.RUN_MIRAI_SNAPSHOTS == 'true' }}
         run: ./gradlew publishAllPublicationsToMiraiRepoRepository ${{ env.gradleArgs }}
         env:
-          MIRAI_IS_SNAPSHOTS_PUBLISHING: true
+          MIRAI_IS_SNAPSHOTS_PUBLISHING: false
           SNAPSHOTS_PUBLISHING_USER: ${{ secrets.SNAPSHOTS_PUBLISHING_USER }}
           SNAPSHOTS_PUBLISHING_KEY: ${{ secrets.SNAPSHOTS_PUBLISHING_KEY }}
           SNAPSHOTS_PUBLISHING_URL: ${{ secrets.SNAPSHOTS_PUBLISHING_URL }}
